@@ -1,12 +1,10 @@
 ﻿#define SHOW_STEPS
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Canonical
 {
-    using fractional = Decimal;
+    using fractional = Double;
     class Program
     {
         static void PrintSteps(string format = "", params object[] args)
@@ -74,8 +72,42 @@ namespace Canonical
                         // No such rows.
                         if (k == rows)
                         {
-                            PrintSteps($"Skip column {j + 1}.");
-                            j++;
+                            bool notNullAbove = false;
+                            for (k = 0; k < i; k++)
+                            {
+                                notNullAbove |= matrix[k, j] != 0;
+                            }
+
+                            if (notNullAbove)
+                            {
+                                for (k = j + 1; k < columns; ++k)
+                                {
+                                    if (matrix[i, k] != 0)
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                // No such columns.
+                                if (k == columns)
+                                {
+                                    PrintSteps($"Skip column {j + 1}.");
+                                    j++;
+                                }
+                                else
+                                {
+                                    PrintSteps($"Swap columns {j + 1} and {k + 1}.");
+                                    for (int l = 0; l < rows; l++)
+                                    {
+                                        (matrix[l, j], matrix[l, k]) = (matrix[l, k], matrix[l, j]);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                PrintSteps($"Skip column {j + 1}.");
+                                j++;
+                            }
                         }
                         else
                         {
@@ -143,3 +175,55 @@ namespace Canonical
         }
     }
 }
+
+/*
+4
+6
+6 4 5 2 3 1
+3 2 -2 1 0 -7
+9 6 1 3 2 2
+3 2 4 1 2 3
+*/
+
+/*
+3
+5
+-6 9 3 2 4
+-2 3 5 4 2
+-4 6 4 3 3
+*/
+
+/*
+3
+6
+1 -1 4 3 0 0
+3 -2 1 2 0 1
+2 -1 -3 -3 2 1
+*/
+
+/*
+4
+5
+5 21 1 -9 -13
+5 41 -4 -14 2
+1 -11 4 2 -14
+-4 -40 5 13 -7
+*/
+
+/*
+5
+6
+81 -27 9 -3 1 4
+16 -8 4 -2 1 0
+1 -1 1 -1 1 3
+1 1 1 1 1 3
+256 64 16 4 1 1
+*/
+
+/*
+3
+4
+11 -7 61 -3
+0 6 -24 1
+3 -2 17 1
+*/
