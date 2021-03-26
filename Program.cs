@@ -114,7 +114,7 @@ namespace Canonical
                             PrintSteps($"Swap rows {i + 1} and {k + 1}.");
                             for (int l = j; l < columns; l++)
                             {
-                                (matrix[i, l], matrix[k, l]) = (matrix[k, l], matrix[i, j]);
+                                (matrix[i, l], matrix[k, l]) = (matrix[k, l], matrix[i, l]);
                             }
                         }
                     }
@@ -195,6 +195,14 @@ namespace Canonical
 
 /*
 3
+5
+3 2 -6 9 4
+5 4 -2 3 2
+4 3 -4 6 3
+*/
+
+/*
+3
 6
 1 -1 4 3 0 0
 3 -2 1 2 0 1
@@ -226,4 +234,14 @@ namespace Canonical
 11 -7 61 -3
 0 6 -24 1
 3 -2 17 1
+*/
+
+/*
+5
+5
+1 1 2 1 1
+1 1 2 1 -1
+1 -1 0 5 -1
+1 -1 0 5 0
+0 -1 -1 2 0
 */
